@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed = 0.2f;
-    private Vector2 _direction;
+    [SerializeField] private float _jumpStrenght = 2.2f;
+    private Rigidbody2D _rigidbody;
 
-    private void Start()
+    private void Awake()
     {
-        Debug.Log("Hello, Unity!");
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        transform.Translate(Vector3.right * _speed * Time.deltaTime);
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _rigidbody.AddForce(Vector2.up * _jumpStrenght, ForceMode2D.Impulse);
+        }
     }
 }
